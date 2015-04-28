@@ -1,0 +1,187 @@
+<?php
+
+/**
+ * @file
+ * File routing_debug.module.
+ *
+ * Module provides simple functionality - printing out Drupal routing
+ * information including callback and where the callback is defined.
+ */
+
+// Debug mode toggle.
+define("ROUTING_DEBUG_DEBUG", TRUE);
+
+/**
+ * HOOKS ----------------------------------------------------------------------.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * We define two menus here:
+ * 1) main page with table containing routing data,
+ * 2) debug page - a helper.
+ */
+function routing_debug_menu() {
+  $menu_items = array();
+
+  $menu_items['routing_debug'] = array(
+    'title' => 'Routing debug',
+    'page callback' => 'routing_debug_page',
+    'access arguments' => array('access routing information'),
+  );
+
+  $menu_items['routing_debug/debug'] = array(
+    'title' => 'Routing debug - Debug',
+    'page callback' => 'routing_debug_debug_page',
+    'access arguments' => array('access routing information'),
+  );
+
+  return $menu_items;
+}
+
+/**
+ * CALLBACKS ------------------------------------------------------------------.
+ */
+
+/**
+ * Page callback - generates page with routing table.
+ */
+function routing_debug_page() {
+  // Let's get the data we're going to be processing first.
+  $menu_router = menu_get_router();
+
+  // Table rows for output table.
+  $rows = array();
+
+  // We need to process each record from menu router,
+  // extract additional information and prepare it for output.
+  foreach ($menu_router as $routing_item_name => $routing_item) {
+    // Let's get the correct callback first,
+    // as it might be masked behind 'drupal_get_form'.
+    // @TODO: Are there any other options that can mask actual callback?
+    $page_callback = $routing_item['page callback'];
+    if (0 == strcmp($page_callback, 'drupal_get_form')) {
+      $page_callback = $routing_item['page arguments'][0];
+    }
+
+    // Default options for file name and function definition line number,
+    // in case we can't retrieve them.
+    $file_name = 'unavailable/not enabled';
+    $line_number = '(???)';
+
+    // We need to wrap this into try-catch block, as creating ReflectionFunction
+    // instance for callback that are not included/enabled throws an Exception.
+    try {
+      $function_data = _routing_debug_get_file_info($page_callback);
+      $file_name = $function_data['file_name'];
+      $line_number = $function_data['line_number'];
+    }
+    catch (ReflectionException $re) {
+      // We got some failure, so let's write some debug first.
+      (ROUTING_DEBUG_DEBUG) ? watchdog('routing_debug', "Reflection failed: " . $re->getMessage() . "; Trace: " . $re->getTraceAsString(), array(), WATCHDOG_DEBUG) : NULL;
+
+      // In case we were not able to get the file name dynamically, we'll
+      // have to work with data provided in 'menu_get_router' array.
+      $file_name = $routing_item['include file'];
+
+      // Let's prepare or file parts for it's loading.
+      $file_parts = pathinfo($file_name);
+      $module_path = drupal_get_path('module', $routing_item['module']);
+      $incl_type = $file_parts['extension'];
+      $incl_module = $routing_item['module'];
+      $incl_name = substr(substr($file_name, strlen($module_path) + 1), 0, -(strlen($incl_type) + 1));
+      module_load_include($incl_type, $incl_module, $incl_name);
+
+      // And let's try getting the function declaration again.
+      try {
+        $function_data = _routing_debug_get_file_info($page_callback);
+        $file_name = $function_data['file_name'];
+        $line_number = $function_data['line_number'];
+      }
+      catch (ReflectionException $re) {
+        // Nothing else we can do here - we'll print what ever we got.
+      }
+    }
+
+    // Let's prepare the array structure for the table.
+    $row = array(
+      'path' => '/' . $routing_item_name,
+      'callback' => $page_callback,
+      'module' => $routing_item['module'],
+      'file' => $file_name,
+      'line' => $line_number,
+    );
+    $rows[$routing_item_name] = $row;
+  }
+
+  // Header of the table.
+  $header = array(
+    'path' => t('Route (path)'),
+    'callback' => t('Callback'),
+    'module' => t('Module'),
+    'file' => t('File'),
+    'line' => t('Line'),
+  );
+
+  // And finally the whole table.
+  $variables = array(
+    'header' => $header,
+    'rows' => $rows,
+    'attributes' => array(),
+    'caption' => '',
+    'colgroups' => array(),
+    'sticky' => TRUE,
+    'empty' => t('No routes available.'),
+  );
+
+  // Theme it as nice Drupal table.
+  $output = theme_table($variables);
+
+  return $output;
+}
+
+/**
+ * Routing debug - Debug page callback.
+ */
+function routing_debug_debug_page() {
+
+  $menu_names = menu_get_names();
+  $output = kprint_r($menu_names, TRUE, t('Menu names'));
+  $menu_router = menu_get_router();
+  $output .= kprint_r($menu_router, TRUE, t('Menu router'));
+  $system_menus = menu_list_system_menus();
+  $output .= kprint_r($system_menus, TRUE, t('System menus'));
+
+  return $output;
+}
+
+/**
+ * HELPERS --------------------------------------------------------------------.
+ */
+
+/**
+ * Helper function trying to retrieve file and line number for given function.
+ *
+ * @param string $page_callback
+ *   Name of function to inspect (string).
+ *
+ * @returns array
+ *  Array consists of two parts - 'file_name' and 'line_number'.
+ *
+ * @throws ReflectionException
+ *   Throws exception, e.g. if function does not exist/is not found.
+ */
+function _routing_debug_get_file_info($page_callback) {
+  /* @var $rf ReflectionFunction */
+  $rf = new ReflectionFunction($page_callback);
+  $file_name = $rf->getFileName();
+  // Removing Drupal root path from the beginning of file path.
+  $file_name = substr($file_name, strlen(DRUPAL_ROOT) + 1);
+  $line_number = $rf->getStartLine();
+
+  $result = array();
+  $result['file_name'] = $file_name;
+  $result['line_number'] = $line_number;
+  return $result;
+}

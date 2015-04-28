@@ -1,0 +1,5 @@
+name = Routing Debug
+description = Provides more detailed information about routing in Drupal.
+core = 7.x
+
+package = Development
