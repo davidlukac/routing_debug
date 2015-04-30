@@ -11,6 +11,9 @@
 // Debug mode toggle.
 define("ROUTING_DEBUG_DEBUG", TRUE);
 
+// Loading admin pages.
+module_load_include('inc', 'routing_debug', 'routing_debug.admin');
+
 /**
  * HOOKS ----------------------------------------------------------------------.
  */
@@ -25,6 +28,8 @@ define("ROUTING_DEBUG_DEBUG", TRUE);
 function routing_debug_menu() {
   $menu_items = array();
 
+  // @TODO: Make me into tabs.
+
   $menu_items['routing_debug'] = array(
     'title' => 'Routing debug',
     'page callback' => 'routing_debug_page',
@@ -34,6 +39,13 @@ function routing_debug_menu() {
   $menu_items['routing_debug/debug'] = array(
     'title' => 'Routing debug - Debug',
     'page callback' => 'routing_debug_debug_page',
+    'access arguments' => array('access routing information'),
+  );
+
+  $menu_items['routing_debug/settings'] = array(
+    'title' => 'Routing debug settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('routing_debug_admin_form'),
     'access arguments' => array('access routing information'),
   );
 
@@ -79,7 +91,7 @@ function routing_debug_page() {
     }
     catch (ReflectionException $re) {
       // We got some failure, so let's write some debug first.
-      (ROUTING_DEBUG_DEBUG) ? watchdog('routing_debug', "Reflection failed: " . $re->getMessage() . "; Trace: " . $re->getTraceAsString(), array(), WATCHDOG_DEBUG) : NULL;
+      (_routing_debug_debug_mode()) ? watchdog('routing_debug', "Reflection failed: " . $re->getMessage() . "; Trace: " . $re->getTraceAsString(), array(), WATCHDOG_DEBUG) : NULL;
 
       // In case we were not able to get the file name dynamically, we'll
       // have to work with data provided in 'menu_get_router' array.
@@ -184,4 +196,14 @@ function _routing_debug_get_file_info($page_callback) {
   $result['file_name'] = $file_name;
   $result['line_number'] = $line_number;
   return $result;
+}
+
+/**
+ * Helper function - returns debug mode flag.
+ *
+ * @return bool
+ *   TRUE if debug mode is enabled, FALSE otherwise.
+ */
+function _routing_debug_debug_mode() {
+  return variable_get('routing_debug_debug_mode', FALSE);
 }
