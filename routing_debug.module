@@ -21,32 +21,43 @@ module_load_include('inc', 'routing_debug', 'routing_debug.admin');
 /**
  * Implements hook_menu().
  *
- * We define two menus here:
+ * We define following menus here:
  * 1) main page with table containing routing data,
- * 2) debug page - a helper.
+ * 2) debug page - a helper displaying raw data,
+ * 3) settings page with log debug toggle.
  */
 function routing_debug_menu() {
   $menu_items = array();
-
-  // @TODO: Make me into tabs.
 
   $menu_items['routing_debug'] = array(
     'title' => 'Routing debug',
     'page callback' => 'routing_debug_page',
     'access arguments' => array('access routing information'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $menu_items['routing_debug/routing'] = array(
+    'title' => 'Routing info',
+    'access arguments' => array('access routing information'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 1,
   );
 
   $menu_items['routing_debug/debug'] = array(
-    'title' => 'Routing debug - Debug',
+    'title' => 'Devel debug',
     'page callback' => 'routing_debug_debug_page',
     'access arguments' => array('access routing information'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 2,
   );
 
   $menu_items['routing_debug/settings'] = array(
-    'title' => 'Routing debug settings',
+    'title' => 'Settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('routing_debug_admin_form'),
     'access arguments' => array('access routing information'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 3,
   );
 
   return $menu_items;
