@@ -180,6 +180,54 @@ function routing_debug_debug_page() {
 }
 
 /**
+ * Implements hook_help().
+ *
+ * Providing help text for the module.
+ *
+ * @inheritdoc
+ */
+function routing_debug_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#routing_debug':
+      $help_text = '<h2>' . t('Description') . '</h2>';
+      $help_text .= t('Routing Debug is a simple module that provides menu routing table with additional information like:');
+      $help_text .= '<ul>';
+      $help_text .= '<li>' . t('name of the callback function,') . '</li>';
+      $help_text .= '<li>' . t('filename and path of file where the callback is defined,') . '</li>';
+      $help_text .= '<li>' . t('line number of function definition.') . '</li>';
+      $help_text .= '</ul>';
+      $help_text .= '<p>' . t('Intention of the module is to help developer to identify potential menu overrides.') . '</p>';
+      $help_text .= '<p>' . t('Module interface is accessible on <a href="@url">/routing_debug</a> page.', array('@url' => url('routing_debug'))) . '</p>';
+
+      $help_text .= '<h2>' . t('README file contents') . '</h2>';
+
+      $path = dirname(__FILE__) . '/README.md';
+      if (file_exists($path)) {
+        $readme_content = file_get_contents($path);
+
+        if (module_exists('markdown')) {
+          $filters = module_invoke('markdown', 'filter_info');
+          $info = $filters['filter_markdown'];
+
+          if (function_exists($info['process callback'])) {
+            $readme_output = $info['process callback']($readme_content, NULL);
+          }
+          else {
+            $readme_output = '<pre>' . $readme_content . '</pre>';
+          }
+        }
+        else {
+          $readme_output = '<pre>' . $readme_content . '</pre>';
+        }
+      }
+
+      $help_text .= $readme_output;
+
+      return $help_text;
+  }
+}
+
+/**
  * HELPERS --------------------------------------------------------------------.
  */
 
