@@ -169,7 +169,7 @@ function routing_debug_page() {
   );
 
   // Theme it as nice Drupal table.
-  $output = theme_table($variables);
+  $output = theme('table', $variables);
 
   return $output;
 }
