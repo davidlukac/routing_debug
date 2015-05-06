@@ -22,9 +22,13 @@ Only dependency of the module is `devel` module.
 # Usage
 
 After module is installed, the usage is very simple. Module registers it's main
-path (`rounting_debug/`), which directly shows available menu routing information
- in a table. Two additional tabs are available on the page: raw devel formated
- menu data and settings page. Settings page allows _'debug log'_ toggle to be
- enabled, which logs additional information to watchdog, in case of _'magic 
- Reflection'_ failure.
- 
+path (`/rounting_debug`), which directly shows available menu routing information
+in a table. Two additional tabs are available on the page: raw devel formated
+menu data and settings page. Settings page allows _'debug log'_ toggle to be
+enabled, which logs additional information to watchdog, in case of _'magic 
+Reflection'_ failure.
+
+## Dependencies
+
+Module uses some functions from [Devel](https://www.drupal.org/project/devel) and therefore is
+dependant on it.
