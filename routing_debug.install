@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * File routing_debug.install.
+ */
+
+/*
+ * UNINSTALL HOOKS ------------------------------------------------------------.
+ */
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Let's perform clean up after our module.
+ */
+function routing_debug_uninstall() {
+  // Let's delete our own variables.
+  variable_del('routing_debug_debug_mode');
+}
