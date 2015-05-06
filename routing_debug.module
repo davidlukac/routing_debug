@@ -60,6 +60,16 @@ function routing_debug_menu() {
     'weight' => 3,
   );
 
+  // Let's generate link to the config page for admin menu/pages as well.
+  $menu_items['admin/config/development/routing_debug'] = array(
+    'title' => 'Routing Debug settings',
+    'description' => 'Additional settings for Routing Debug module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('routing_debug_admin_form'),
+    'access arguments' => array('access routing information'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $menu_items;
 }
 
