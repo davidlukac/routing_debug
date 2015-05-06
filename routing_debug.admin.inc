@@ -6,7 +6,7 @@
  */
 
 /**
- * Form generator callback for administartion page.
+ * Form generator callback for administration page.
  *
  * @return array
  *   Configuration/settings form.
@@ -22,5 +22,4 @@ function routing_debug_admin_form() {
   );
 
   return system_settings_form($form);
-
 }
