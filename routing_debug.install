@@ -11,6 +11,8 @@
 
 /**
  * Implements hook_install().
+ *
+ * Display message with link to module interface after the installation.
  */
 function routing_debug_install() {
   $t = get_t();
