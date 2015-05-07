@@ -3,3 +3,7 @@ description = Provides more detailed information about routing in Drupal.
 core = 7.x
 
 package = Development
+
+dependencies[] = devel
+
+configure = admin/config/development/routing_debug
