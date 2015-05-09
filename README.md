@@ -1,11 +1,11 @@
 Readme file for Routing Debug module
 --------------------------------------------------------------------------------
 
-Visit project sandbox [page](https://www.drupal.org/sandbox/david.lukac/2479685) on Drupal.org,
-for more information about the project.
+Visit project sandbox [page](https://www.drupal.org/sandbox/david.lukac/2479685) 
+on Drupal.org, for more information about the project.
  
 To create a Git clone of latest dev snapshot, run
-`git clone --branch 7.x-1.x http://git.drupal.org/sandbox/david.lukac/2479685.git routing_debug`
+`git clone --branch 7.x-1.x-rc http://git.drupal.org/sandbox/david.lukac/2479685.git routing_debug`
 in `sites/all/modules/` folder.
 
 # Overview
@@ -41,13 +41,13 @@ Only dependency of the module is `devel` module.
 # Tutorial
 
 After module is installed, the usage is very simple. Module registers it's main
-path (`/rounting_debug`), which directly shows available menu routing information
-in a table. Two additional tabs are available on the page: raw devel formated
-menu data and settings page. Settings page allows _'debug log'_ toggle to be
-enabled, which logs additional information to watchdog, in case of _'magic 
+path (`/rounting_debug`), which directly shows available menu routing
+information in a table. Two additional tabs are available on the page: raw devel
+formatted menu data and settings page. Settings page allows _'debug log'_ toggle 
+to be enabled, which logs additional information to watchdog, in case of _'magic 
 Reflection'_ failure.
 
 ## Requirements and dependencies
 
-Module uses some functions from [Devel](https://www.drupal.org/project/devel) and therefore is
-dependant on it.
+Module uses some functions from [Devel](https://www.drupal.org/project/devel)
+and therefore is dependent on it.
