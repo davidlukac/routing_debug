@@ -6,4 +6,6 @@ package = Development
 
 dependencies[] = devel
 
+stylesheets[all][] = css/routing_debug.css
+
 configure = admin/config/development/routing_debug
