@@ -1,3 +1,8 @@
+[Routing Debug - v0.1.0 (2015-05-10)](https://github.com/davidlukac/routing_debug/releases/tag/v0.1.0)
+--------------------------------------------------------------------------------
+- Added link to 'devel/menu/item' and actual menu route (if valid) from Routing
+  Debug page.
+
 [Routing Debug - v0.0.2 (2015-05-07)](https://github.com/davidlukac/routing_debug/releases/tag/v0.0.2)
 --------------------------------------------------------------------------------
 - Fixed _'devel'_ dependency.
