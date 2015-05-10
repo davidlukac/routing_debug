@@ -137,13 +137,24 @@ function routing_debug_page() {
       }
     }
 
+    // First part - we generate URL to /devel/menu/item of the route.
+    $complex_urls = '<a href=';
+    $complex_urls .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
+    $complex_urls .= '>/' . $routing_item_name . '</a>';
+
+    /* And if the URL is valid path, we also generate an actual link to it.
+     * The '&#8594;' is the same as $rarr; (right array) which doesn't seem
+     * to work here. */
+    (drupal_valid_path($routing_item_name, FALSE)) ?
+      ($complex_urls .= ' <a href=' . url($routing_item_name) . '>&#8594;</a>') : NULL;
+
     // Let's prepare the array structure for the table.
     $row = array(
-      'path' => '/' . $routing_item_name,
-      'callback' => $page_callback,
-      'module' => $routing_item['module'],
+      'path' => $complex_urls,
+      'callback' => '<em>' . $page_callback . '();</em>',
+      'module' => '<strong>' . $routing_item['module'] . '</strong>',
       'file' => $file_name,
-      'line' => $line_number,
+      'line' => '<span class="routing-debug-noselect">:</span><span>' . $line_number . '</span>',
     );
     $rows[$routing_item_name] = $row;
   }
