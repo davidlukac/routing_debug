@@ -1,4 +1,4 @@
-[Routing Debug - v0.2.0 (2015-05-16)](https://github.com/davidlukac/routing_debug/releases/tag/v0.2.0)
+[Routing Debug - v0.2.1 (2015-05-16)](https://github.com/davidlukac/routing_debug/releases/tag/v0.2.0)
 --------------------------------------------------------------------------------
 - Implemented debug block that shows relevant information for current path.
 
