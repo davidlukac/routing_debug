@@ -25,7 +25,9 @@ overrides. Module interface is accessible on _/routing_debug_ URL.
 - Display registered routes, module the are coming from,
 - callback function handling each route/path,
 - file and line number of each callback function,
-- display raw information provided by _menu_names()_, _system_menus()_ and _menu_router()_ functions.
+- display raw information provided by _menu_names()_, _system_menus()_ 
+  and _menu_router()_ functions.
+- Module also provides block with the debug information for current path.
 
 # Installation
 
