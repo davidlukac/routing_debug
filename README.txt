@@ -49,6 +49,13 @@ formatted menu data and settings page. Settings page allows _'debug log'_ toggle
 to be enabled, which logs additional information to watchdog, in case of _'magic 
 Reflection'_ failure.
 
+On the main routing debug page, each routing page links both to the actual page
+(if it's a valid path) and 'devel/menu/item' page for given route.
+
+Module also provides a block with the same routing information. Add the block
+to your preferred region to always show routing debug information 
+for current path. 
+
 ## Requirements and dependencies
 
 Module uses some functions from [Devel](https://www.drupal.org/project/devel)
