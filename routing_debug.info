@@ -6,6 +6,9 @@ package = Development
 
 dependencies[] = devel
 
+files[] = includes/RoutingInfo.inc
+files[] = includes/MenuRoutingItem.inc
+
 stylesheets[all][] = css/routing_debug.css
 
 configure = admin/config/development/routing_debug
