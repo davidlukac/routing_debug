@@ -100,8 +100,11 @@ function routing_debug_help($path, $arg) {
       $help_text .= '<li>' . t('filename and path of file where the callback is defined,') . '</li>';
       $help_text .= '<li>' . t('line number of function definition.') . '</li>';
       $help_text .= '</ul>';
-      $help_text .= '<p>' . t('Intention of the module is to help developer to identify potential menu overrides.') . '</p>';
-      $help_text .= '<p>' . t('Module interface is accessible on <a href="@url">/routing_debug</a> page.', array('@url' => url('routing_debug'))) . '</p>';
+      $help_text .= '<p>' . t('Intention of the module is to help developer to identify potential menu overrides.
+        Module also provides a block with the same routing information. Add the
+        block to your preferred region to always show routing debug information
+        for current path.') . '</p>';
+      $help_text .= '<p>' . t('Module interface is accessible on <a href="@url">/devel/routing_debug</a> page.', array('@url' => url('devel/routing_debug'))) . '</p>';
 
       $help_text .= '<h2>' . t('README file contents') . '</h2>';
 
@@ -139,7 +142,9 @@ function routing_debug_help($path, $arg) {
  * Implements hook_block_info().
  *
  * We just define our block here; it's actual contents is being provided
- * by hook_block_view() function.
+ * by hook_block_view() function: Routing Debug block is the only block defined
+ * by this module. Block displays the routing debug information for
+ * current path.
  */
 function routing_debug_block_info() {
   $routing_debug_block = array(
