@@ -28,30 +28,48 @@ module_load_include('inc', 'routing_debug', 'routing_debug.pages');
 function routing_debug_menu() {
   $menu_items = array();
 
-  $menu_items['routing_debug'] = array(
+  // Adding our menu to Reports group, so it's easily accessible when
+  // Administration menu is not enabled.
+  $menu_items['admin/reports/routing_debug'] = array(
     'title' => 'Routing debug',
+    'description' => 'Get detailed information about all registered routes.',
     'page callback' => 'routing_debug_page',
     'access arguments' => array('access routing information'),
     'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management',
   );
 
-  $menu_items['routing_debug/routing'] = array(
+  // Adding our menu to 'devel' group, so it's displayed under Development
+  // group in Administration menu.
+  $menu_items['devel/routing_debug'] = array(
+    'title' => 'Routing debug',
+    'description' => 'Get detailed information about all registered routes.',
+    'page callback' => 'routing_debug_page',
+    'access arguments' => array('access routing information'),
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'devel',
+  );
+
+  $menu_items['devel/routing_debug/routing'] = array(
     'title' => 'Routing info',
+    'description' => 'Get detailed information about all registered routes.',
     'access arguments' => array('access routing information'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => 1,
   );
 
-  $menu_items['routing_debug/debug'] = array(
+  $menu_items['devel/routing_debug/debug'] = array(
     'title' => 'Devel debug',
+    'description' => 'Verbose debug page with additional information provided by Devel module.',
     'page callback' => 'routing_debug_debug_page',
     'access arguments' => array('access routing information'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
   );
 
-  $menu_items['routing_debug/settings'] = array(
+  $menu_items['devel/routing_debug/settings'] = array(
     'title' => 'Settings',
+    'description' => 'Additional settings for Routing Debug module',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('routing_debug_admin_form'),
     'access arguments' => array('access routing information'),
@@ -62,7 +80,7 @@ function routing_debug_menu() {
   // Let's generate link to the config page for admin menu/pages as well.
   $menu_items['admin/config/development/routing_debug'] = array(
     'title' => 'Routing Debug settings',
-    'description' => 'Additional settings for Routing Debug module',
+    'description' => 'Additional settings for Routing Debug module.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('routing_debug_admin_form'),
     'access arguments' => array('access routing information'),
@@ -74,6 +92,8 @@ function routing_debug_menu() {
 
 /**
  * Implements hook_permission().
+ *
+ * Defining 'Access routing information' permission for Routing Debug module.
  */
 function routing_debug_permission() {
   return array(
@@ -169,11 +189,11 @@ function routing_debug_block_view($delta = '') {
   $block = array();
 
   if (user_access('access routing information')) {
-  switch ($delta) {
-    case 'routing_debug':
-      $block['subject'] = t('Routing Debug');
-      $block['content'] = _routing_debug_block_contents();
-  }
+    switch ($delta) {
+      case 'routing_debug':
+        $block['subject'] = t('Routing Debug');
+        $block['content'] = _routing_debug_block_contents();
+    }
   }
 
   return $block;
@@ -233,33 +253,33 @@ function _routing_debug_block_contents() {
   // We render contents of the block only if the path is valid, otherwise
   // what's to write there.
   if (drupal_valid_path($current_path)) {
-  // Let's get the whole router, because menu_get_item() doesn't give us
-  // everything we need. We don't mind calling menu_get_router(), because it
-  // has caching implemented.
-  $menu_router = menu_get_router();
-  // We need to convert specific path to generic one, e.g. user/15 to user/%,
+    // Let's get the whole router, because menu_get_item() doesn't give us
+    // everything we need. We don't mind calling menu_get_router(), because it
+    // has caching implemented.
+    $menu_router = menu_get_router();
+    // We need to convert specific path to generic one, e.g. user/15 to user/%,
     // otherwise we won't be able to find our path in array from
     // menu_get_router. Also current_path() handles things like Drupal in
     // a subfolder for us, so we don't need to worry about that.
-  $menu_item = menu_get_item($current_path);
-  $routing_item_name = $menu_item['path'];
-  $routing_item = $menu_router[$routing_item_name];
+    $menu_item = menu_get_item($current_path);
+    $routing_item_name = $menu_item['path'];
+    $routing_item = $menu_router[$routing_item_name];
 
     /* @var $routing_info RoutingInfo Let's retrieve routing item information
      * here magically, using Reflection. */
-  $routing_info = _routing_debug_get_path_info($routing_item_name, $routing_item);
+    $routing_info = _routing_debug_get_path_info($routing_item_name, $routing_item);
 
-  // Build link to 'devel/menu/item' with current path.
-  $url = '<a href=';
-  $url .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
-  $url .= '>/' . $routing_item_name . '</a>';
+    // Build link to 'devel/menu/item' with current path.
+    $url = '<a href=';
+    $url .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
+    $url .= '>/' . $routing_item_name . '</a>';
 
-  // And build content of whole block from information we've gathered.
-  $block_markup = '<em>Path:</em><br />\'' . $url . '\'<br /><br />';
-  $block_markup .= '<em>Callback:</em><br />\'' . $routing_info->getCallback() . '()\'<br /><br />';
-  $block_markup .= '<em>Module:</em><br /><strong>\'' . $routing_info->getModule() . '\'</strong><br /><br />';
-  $block_markup .= '<em>File:</em><br />\'' . $routing_info->getFile() . '\'<br /><br />';
-  $block_markup .= '<em>Line:</em><br />' . $routing_info->getLine();
+    // And build content of whole block from information we've gathered.
+    $block_markup = '<em>Path:</em><br />\'' . $url . '\'<br /><br />';
+    $block_markup .= '<em>Callback:</em><br />\'' . $routing_info->getCallback() . '()\'<br /><br />';
+    $block_markup .= '<em>Module:</em><br /><strong>\'' . $routing_info->getModule() . '\'</strong><br /><br />';
+    $block_markup .= '<em>File:</em><br />\'' . $routing_info->getFile() . '\'<br /><br />';
+    $block_markup .= '<em>Line:</em><br />' . $routing_info->getLine();
   }
   else {
     $block_markup = t("<em>This does not seem to be a valid path!</em>");
