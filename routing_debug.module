@@ -73,6 +73,17 @@ function routing_debug_menu() {
 }
 
 /**
+ * Implements hook_permission().
+ */
+function routing_debug_permission() {
+  return array(
+    'access routing information' => array(
+      'title' => t('Access routing information'),
+    ),
+  );
+}
+
+/**
  * Implements hook_help().
  *
  * Providing help text for the module.
