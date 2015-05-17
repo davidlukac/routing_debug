@@ -156,15 +156,19 @@ function routing_debug_block_info() {
 /**
  * Implements hook_block_view().
  *
- * Provides actual content for blocks defined by this module.
+ * Provides actual content for blocks defined by this module, in our case there
+ * is only one block: 'Routing Debug block' displays the routing debug
+ * information for current path.
  */
 function routing_debug_block_view($delta = '') {
   $block = array();
 
+  if (user_access('access routing information')) {
   switch ($delta) {
     case 'routing_debug':
       $block['subject'] = t('Routing Debug');
       $block['content'] = _routing_debug_block_contents();
+  }
   }
 
   return $block;
@@ -219,21 +223,25 @@ function _routing_debug_debug_mode() {
 function _routing_debug_block_contents() {
   $block_content = array();
 
+  $current_path = current_path();
+
+  // We render contents of the block only if the path is valid, otherwise
+  // what's to write there.
+  if (drupal_valid_path($current_path)) {
   // Let's get the whole router, because menu_get_item() doesn't give us
   // everything we need. We don't mind calling menu_get_router(), because it
   // has caching implemented.
   $menu_router = menu_get_router();
-  $current_path = current_path();
   // We need to convert specific path to generic one, e.g. user/15 to user/%,
-  // otherwise we won't be able to find our path in array from menu_get_router.
-  // Also current_path() handles things like Drupal in a subfolder for us,
-  // so we don't need to worry about that.
+    // otherwise we won't be able to find our path in array from
+    // menu_get_router. Also current_path() handles things like Drupal in
+    // a subfolder for us, so we don't need to worry about that.
   $menu_item = menu_get_item($current_path);
   $routing_item_name = $menu_item['path'];
   $routing_item = $menu_router[$routing_item_name];
 
-  /* @var $routing_info RoutingInfo Let's retrieve routing item information here
-   * magically, using Reflection. */
+    /* @var $routing_info RoutingInfo Let's retrieve routing item information
+     * here magically, using Reflection. */
   $routing_info = _routing_debug_get_path_info($routing_item_name, $routing_item);
 
   // Build link to 'devel/menu/item' with current path.
@@ -247,6 +255,10 @@ function _routing_debug_block_contents() {
   $block_markup .= '<em>Module:</em><br /><strong>\'' . $routing_info->getModule() . '\'</strong><br /><br />';
   $block_markup .= '<em>File:</em><br />\'' . $routing_info->getFile() . '\'<br /><br />';
   $block_markup .= '<em>Line:</em><br />' . $routing_info->getLine();
+  }
+  else {
+    $block_markup = t("<em>This does not seem to be a valid path!</em>");
+  }
 
   $block_content['#markup'] = $block_markup;
 
