@@ -116,9 +116,9 @@ function routing_debug_help($path, $arg) {
       $help_text = '<h2>' . t('Description') . '</h2>';
       $help_text .= t('Routing Debug is a simple module that provides menu routing table with additional information like:');
       $help_text .= '<ul>';
-      $help_text .= '<li>' . t('name of the callback function,') . '</li>';
-      $help_text .= '<li>' . t('filename and path of file where the callback is defined,') . '</li>';
-      $help_text .= '<li>' . t('line number of function definition.') . '</li>';
+      $help_text .= '<li>' . t('Name of the callback function,') . '</li>';
+      $help_text .= '<li>' . t('Filename and path of file where the callback is defined,') . '</li>';
+      $help_text .= '<li>' . t('Line number of function definition.') . '</li>';
       $help_text .= '</ul>';
       $help_text .= '<p>' . t('Intention of the module is to help developer to identify potential menu overrides.
         Module also provides a block with the same routing information. Add the
