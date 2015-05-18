@@ -18,7 +18,7 @@ additional information like:
 - line number of function definition.
 
 Intention of the module is to help developer to identify potential menu 
-overrides. Module interface is accessible on _/routing_debug_ URL.
+overrides. Module interface is accessible on _devel/routing_debug_ URL.
 
 # Features
 
@@ -38,12 +38,12 @@ or by running
 
 which downloads and enables the module.
 
-Only dependency of the module is `devel` module.
+Only dependency of the module is `Devel` module.
 
 # Tutorial
 
 After module is installed, the usage is very simple. Module registers it's main
-path (`/rounting_debug`), which directly shows available menu routing
+path (`devel/rounting_debug`), which directly shows available menu routing
 information in a table. Two additional tabs are available on the page: raw devel
 formatted menu data and settings page. Settings page allows _'debug log'_ toggle 
 to be enabled, which logs additional information to watchdog, in case of _'magic 

@@ -1,3 +1,14 @@
+[Routing Debug - v0.2.2 (2015-05-19)](https://github.com/davidlukac/routing_debug/releases/tag/v0.2.2)
+--------------------------------------------------------------------------------
+- Changed module links to `devel/routing_debug` to be present among other
+  Devel tools.
+- Main module page is now also present under _Reports -> Routing Debug_.
+- Several minor formatting, commenting and documentation changes - see
+  (module application)[https://www.drupal.org/node/2484543#comment-9937723] for details.
+- Fixed module permissions implementation - module defines one permission:
+  _`Access routing information`_ which is checked when visiting module pages
+  or access the information in block provided by the module.
+
 [Routing Debug - v0.2.1 (2015-05-16)](https://github.com/davidlukac/routing_debug/releases/tag/v0.2.1)
 --------------------------------------------------------------------------------
 - Implemented debug block that shows relevant information for current path.
