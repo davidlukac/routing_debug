@@ -275,14 +275,14 @@ function _routing_debug_block_contents() {
     $url .= ">/" . $routing_item_name . "</a>";
 
     // And build content of whole block from information we've gathered.
-    $block_markup = "<em>Path:</em><br />'" . $url . "'<br /><br />";
-    $block_markup .= "<em>Callback:</em><br />'" . $routing_info->getCallback() . "()'<br /><br />";
-    $block_markup .= "<em>Module:</em><br /><strong>'" . $routing_info->getModule() . "'</strong><br /><br />";
-    $block_markup .= "<em>File:</em><br />'" . $routing_info->getFile() . "'<br /><br />";
-    $block_markup .= "<em>Line:</em><br />" . $routing_info->getLine();
+    $block_markup = "<em>" . t("Path:") . "</em><br />'" . $url . "'<br /><br />";
+    $block_markup .= "<em>" . t("Callback:") . "</em><br />'" . $routing_info->getCallback() . "()'<br /><br />";
+    $block_markup .= "<em>" . t("Module:") . "</em><br /><strong>'" . $routing_info->getModule() . "'</strong><br /><br />";
+    $block_markup .= "<em>" . t("File:") . "</em><br />'" . $routing_info->getFile() . "'<br /><br />";
+    $block_markup .= "<em>" . t("Line:") . "</em><br />" . $routing_info->getLine();
   }
   else {
-    $block_markup = t("<em>This does not seem to be a valid path!</em>");
+    $block_markup = "<em>" . t("This does not seem to be a valid path!") . "</em>";
   }
 
   $block_content['#markup'] = $block_markup;
@@ -351,7 +351,7 @@ function _routing_debug_get_path_info($routing_item_name, array $routing_item) {
       // Not much else we can do here - we'll print what ever we got.
       // Default options for file name and function definition line number,
       // in case we can't retrieve them.
-      $file_name = 'unavailable/not enabled';
+      $file_name = t('unavailable/not enabled');
     }
   }
 
