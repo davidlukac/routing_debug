@@ -8,11 +8,6 @@
  * information including callback and where the callback is defined.
  */
 
-// Loading admin pages.
-module_load_include('inc', 'routing_debug', 'routing_debug.admin');
-// Loading pages include file.
-module_load_include('inc', 'routing_debug', 'routing_debug.pages');
-
 /**
  * HOOKS ----------------------------------------------------------------------.
  */
@@ -37,6 +32,7 @@ function routing_debug_menu() {
     'access arguments' => array('access routing information'),
     'type' => MENU_NORMAL_ITEM,
     'menu_name' => 'management',
+    'file' => 'routing_debug.pages.inc',
   );
 
   // Adding our menu to 'devel' group, so it's displayed under Development
@@ -48,6 +44,7 @@ function routing_debug_menu() {
     'access arguments' => array('access routing information'),
     'type' => MENU_NORMAL_ITEM,
     'menu_name' => 'devel',
+    'file' => 'routing_debug.pages.inc',
   );
 
   $menu_items['devel/routing_debug/routing'] = array(
@@ -65,6 +62,7 @@ function routing_debug_menu() {
     'access arguments' => array('access routing information'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
+    'file' => 'routing_debug.pages.inc',
   );
 
   $menu_items['devel/routing_debug/settings'] = array(
@@ -75,6 +73,7 @@ function routing_debug_menu() {
     'access arguments' => array('access routing information'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 3,
+    'file' => 'routing_debug.admin.inc',
   );
 
   // Let's generate link to the config page for admin menu/pages as well.
@@ -85,6 +84,7 @@ function routing_debug_menu() {
     'page arguments' => array('routing_debug_admin_form'),
     'access arguments' => array('access routing information'),
     'type' => MENU_NORMAL_ITEM,
+    'file' => 'routing_debug.admin.inc',
   );
 
   return $menu_items;

@@ -30,6 +30,10 @@ class MenuRoutingItem {
   /**
    * Returns page callback function name for this router/menu item.
    *
+   * Looks up for callback function name under following aliases:
+   * - 'page callback'
+   * - 'page_callback'
+   *
    * @return string
    *   Page callback function name.
    */
