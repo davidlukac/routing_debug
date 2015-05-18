@@ -3,17 +3,23 @@
  * @file
  * File MenuRoutingItem.inc contains class MenuRoutingItem.
  *
- * Helper class to take care of inconsistencies how information are returned
- * in the associative array returned but either menu_get_router() or
- * menu_get_item() functions. These arrays should have in theory the same,
- * but in reality they have different keys, so we try to handle that here.
+ * Helper class to take care of inconsistencies in associative arrays coming
+ * from menu router functions.
  */
 
 /**
  * Class MenuRoutingItem.
+ *
+ * Helper class to take care of inconsistencies how information are returned
+ * in the associative array returned but either menu_get_router() or
+ * menu_get_item() functions. These arrays should have in theory the same,
+ * but in reality they have different keys, so we try to handle that here.
+ *
+ * @private @property array $routerItem Internal router item holder.
  */
 class MenuRoutingItem {
 
+  /* @var array $routerItem Internal router item holder. */
   private $routerItem;
 
   /**
