@@ -260,7 +260,7 @@ function _routing_debug_block_contents() {
     // We need to convert specific path to generic one, e.g. user/15 to user/%,
     // otherwise we won't be able to find our path in array from
     // menu_get_router. Also current_path() handles things like Drupal in
-    // a subfolder for us, so we don't need to worry about that.
+    // a sub-folder for us, so we don't need to worry about that.
     $menu_item = menu_get_item($current_path);
     $routing_item_name = $menu_item['path'];
     $routing_item = $menu_router[$routing_item_name];
@@ -270,16 +270,16 @@ function _routing_debug_block_contents() {
     $routing_info = _routing_debug_get_path_info($routing_item_name, $routing_item);
 
     // Build link to 'devel/menu/item' with current path.
-    $url = '<a href=';
+    $url = "<a href=";
     $url .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
-    $url .= '>/' . $routing_item_name . '</a>';
+    $url .= ">/" . $routing_item_name . "</a>";
 
     // And build content of whole block from information we've gathered.
-    $block_markup = '<em>Path:</em><br />\'' . $url . '\'<br /><br />';
-    $block_markup .= '<em>Callback:</em><br />\'' . $routing_info->getCallback() . '()\'<br /><br />';
-    $block_markup .= '<em>Module:</em><br /><strong>\'' . $routing_info->getModule() . '\'</strong><br /><br />';
-    $block_markup .= '<em>File:</em><br />\'' . $routing_info->getFile() . '\'<br /><br />';
-    $block_markup .= '<em>Line:</em><br />' . $routing_info->getLine();
+    $block_markup = "<em>Path:</em><br />'" . $url . "'<br /><br />";
+    $block_markup .= "<em>Callback:</em><br />'" . $routing_info->getCallback() . "()'<br /><br />";
+    $block_markup .= "<em>Module:</em><br /><strong>'" . $routing_info->getModule() . "'</strong><br /><br />";
+    $block_markup .= "<em>File:</em><br />'" . $routing_info->getFile() . "'<br /><br />";
+    $block_markup .= "<em>Line:</em><br />" . $routing_info->getLine();
   }
   else {
     $block_markup = t("<em>This does not seem to be a valid path!</em>");
