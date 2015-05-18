@@ -8,18 +8,27 @@
 
 /**
  * Class RoutingInfo.
+ *
+ * This class is a 'data holder' (simple POPO) used to deliver data between
+ * functions.
+ *
+ * @private @property string $path Menu path.
+ * @private @property string $callback Callback function name.
+ * @private @property string $module Name of module defining this path.
+ * @private @property string $file Name of file that contains the callback.
+ * @private @property string $line Line number with callback function.
  */
 class RoutingInfo {
 
-  /* @var $path string */
+  /* @var string $path Menu path. */
   private $path;
-  /* @var $callback string */
+  /* @var string $callback Callback function name. */
   private $callback;
-  /* @var $module string */
+  /* @var string $module Name of module defining this path. */
   private $module;
-  /* @var $file string */
+  /* @var string $file Name of file that contains the callback. */
   private $file;
-  /* @var $line string */
+  /* @var string $line Line number with callback function. */
   private $line;
 
   /**
@@ -33,7 +42,7 @@ class RoutingInfo {
   }
 
   /**
-   * Path settter.
+   * Path setter.
    *
    * @param string $path
    *   Path.
