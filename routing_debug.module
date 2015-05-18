@@ -271,7 +271,7 @@ function _routing_debug_block_contents() {
 
     // Build link to 'devel/menu/item' with current path.
     $url = "<a href=";
-    $url .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
+    $url .= url("devel/menu/item", array('query' => array('path' => $routing_item_name)));
     $url .= ">/" . $routing_item_name . "</a>";
 
     // And build content of whole block from information we've gathered.
