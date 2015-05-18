@@ -26,7 +26,7 @@ function routing_debug_page() {
 
     // First part - we generate URL to /devel/menu/item of the route.
     $complex_urls = '<a href=';
-    $complex_urls .= url("devel/menu/item", array('query' => array('path' => urldecode($routing_item_name))));
+    $complex_urls .= url("devel/menu/item", array('query' => array('path' => $routing_item_name)));
     $complex_urls .= '>/' . $routing_item_name . '</a>';
 
     /* And if the URL is valid path, we also generate an actual link to it.

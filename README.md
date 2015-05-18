@@ -54,7 +54,27 @@ On the main routing debug page, each routing page links both to the actual page
 
 Module also provides a block with the same routing information. Add the block
 to your preferred region to always show routing debug information 
-for current path. 
+for current path.
+
+## Module paths
+
+* If you have Administration menu module enabled, you will find the module pages
+  under 'Development' as 'Routing debug', along with other tools provided by
+  Devel module. Path is `devel/routing_debug`.
+* You also find the main module page under 'Reports' _(Administration -> Reports
+  -> Routing debug)_. Path is `admin/reports/routing_debug`.
+* Module configuration page is under _Administration -> Configuration ->
+  Development -> Routing Debug settings_. Path of the configuration page is
+  `admin/config/development/routing_debug`.
+* To get to all pages at once follow this path: _Administration -> Index 
+  (`admin/index`) -> Routing Debug.
+  
+## Permissions
+
+Module defines one permission: `Access routing information`. Grant this
+permission to roles, who should be able to see the routing information and the
+debug block as well. If they should see the detailed debug provided by Devel
+module, they well need to be granted permissions provided by Devel as well.
 
 ## Requirements and dependencies
 
