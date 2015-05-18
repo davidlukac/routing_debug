@@ -16,7 +16,7 @@
  */
 function routing_debug_install() {
   $t = get_t();
-  drupal_set_message($t('Routing Debug is available on <a href="@url">/routing_debug</a> page.', array('@url' => url('routing_debug'))));
+  drupal_set_message($t('Routing Debug is available on <a href="@url">/devel/routing_debug</a> page.', array('@url' => url('devel/routing_debug'))));
 }
 
 /*
