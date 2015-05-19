@@ -5,7 +5,7 @@ Visit project sandbox [page](https://www.drupal.org/sandbox/david.lukac/2479685)
 on Drupal.org, for more information about the project.
  
 To create a Git clone of latest dev snapshot, run
-`git clone --branch 7.x-1.x-rc http://git.drupal.org/sandbox/david.lukac/2479685.git routing_debug`
+`git clone --branch 7.x-1.x http://git.drupal.org/sandbox/david.lukac/2479685.git routing_debug`
 in `sites/all/modules/` folder.
 
 # Overview
