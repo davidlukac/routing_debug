@@ -1,3 +1,7 @@
+[Routing Debug - v1.0.0 (2015-06-09)](https://github.com/davidlukac/routing_debug/releases/tag/v1.0.0)
+--------------------------------------------------------------------------------
+- First community approved public release of the module (7.x-1.0).
+
 [Routing Debug - v0.2.2 (2015-05-19)](https://github.com/davidlukac/routing_debug/releases/tag/v0.2.2)
 --------------------------------------------------------------------------------
 - Changed module links to `devel/routing_debug` to be present among other
